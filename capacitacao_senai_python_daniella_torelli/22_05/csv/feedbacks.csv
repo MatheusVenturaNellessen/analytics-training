@@ -1,0 +1,101 @@
+data,curso,nota,comentario,recomendaria
+2025-05-06,SQL Essencial,4,Didática ótima,Sim
+2025-05-11,Python para Iniciantes,4,Recomendo!,Sim
+2025-05-15,UI/UX Design,3,Mais ou menos,Sim
+2025-05-01,Data Analysis com Pandas,4,Gostei bastante,Sim
+2025-05-04,Python para Iniciantes,4,Recomendo!,Sim
+2025-05-06,Python para Iniciantes,2,Não gostei,Não
+2025-05-11,Data Analysis com Pandas,2,Muito fraco,Não
+2025-05-01,Python para Iniciantes,3,Precisa melhorar,Não
+2025-05-06,Python para Iniciantes,4,Gostei bastante,Sim
+2025-05-09,SQL Essencial,2,Conteúdo confuso,Não
+2025-05-07,SQL Essencial,5,Muito bom!,Sim
+2025-05-11,Python para Iniciantes,3,Mais ou menos,Sim
+2025-05-04,UI/UX Design,3,Foi ok,Sim
+2025-05-12,UI/UX Design,5,Didática ótima,Sim
+2025-05-02,Data Analysis com Pandas,4,Excelente curso!,Sim
+2025-05-13,UI/UX Design,3,Conteúdo razoável,Não
+2025-05-03,SQL Essencial,1,Aula cansativa,Não
+2025-05-11,UI/UX Design,2,Aula cansativa,Não
+2025-05-02,Python para Iniciantes,2,Muito fraco,Não
+2025-05-05,UI/UX Design,2,Conteúdo confuso,Não
+2025-05-12,UI/UX Design,2,Não recomendo,Não
+2025-05-10,Data Analysis com Pandas,4,Didática ótima,Sim
+2025-05-05,UI/UX Design,3,Esperava mais,Sim
+2025-05-07,SQL Essencial,4,Excelente curso!,Sim
+2025-05-10,Data Analysis com Pandas,3,Precisa melhorar,Sim
+2025-05-01,SQL Essencial,4,Didática ótima,Sim
+2025-05-14,Python para Iniciantes,4,Gostei bastante,Sim
+2025-05-11,Python para Iniciantes,1,Conteúdo confuso,Não
+2025-05-07,Data Analysis com Pandas,2,Aula cansativa,Não
+2025-05-01,UI/UX Design,5,Recomendo!,Sim
+2025-05-15,SQL Essencial,1,Não recomendo,Não
+2025-05-08,Python para Iniciantes,3,Foi ok,Não
+2025-05-06,UI/UX Design,3,Conteúdo razoável,Sim
+2025-05-04,Python para Iniciantes,3,Esperava mais,Sim
+2025-05-10,SQL Essencial,2,Conteúdo confuso,Não
+2025-05-02,Python para Iniciantes,5,Excelente curso!,Sim
+2025-05-10,Python para Iniciantes,2,Aula cansativa,Não
+2025-05-14,Data Analysis com Pandas,1,Aula cansativa,Não
+2025-05-08,SQL Essencial,3,Precisa melhorar,Sim
+2025-05-08,Data Analysis com Pandas,3,Conteúdo razoável,Não
+2025-05-08,Python para Iniciantes,2,Não gostei,Não
+2025-05-03,SQL Essencial,4,Excelente curso!,Sim
+2025-05-03,Data Analysis com Pandas,2,Não gostei,Não
+2025-05-10,SQL Essencial,1,Conteúdo confuso,Não
+2025-05-14,SQL Essencial,4,Recomendo!,Sim
+2025-05-08,Python para Iniciantes,1,Não gostei,Não
+2025-05-04,SQL Essencial,1,Não recomendo,Não
+2025-05-11,Python para Iniciantes,1,Aula cansativa,Não
+2025-05-15,Python para Iniciantes,5,Gostei bastante,Sim
+2025-05-09,UI/UX Design,5,Gostei bastante,Sim
+2025-05-01,SQL Essencial,2,Aula cansativa,Não
+2025-05-13,UI/UX Design,5,Gostei bastante,Sim
+2025-05-14,UI/UX Design,5,Gostei bastante,Sim
+2025-05-09,Data Analysis com Pandas,3,Foi ok,Sim
+2025-05-05,SQL Essencial,3,Esperava mais,Não
+2025-05-05,SQL Essencial,3,Foi ok,Sim
+2025-05-07,Data Analysis com Pandas,4,Gostei bastante,Sim
+2025-05-11,Python para Iniciantes,4,Didática ótima,Sim
+2025-05-10,Python para Iniciantes,5,Gostei bastante,Sim
+2025-05-06,UI/UX Design,3,Mais ou menos,Não
+2025-05-05,Python para Iniciantes,5,Gostei bastante,Sim
+2025-05-07,UI/UX Design,4,Muito bom!,Sim
+2025-05-06,Data Analysis com Pandas,5,Excelente curso!,Sim
+2025-05-15,SQL Essencial,1,Conteúdo confuso,Não
+2025-05-02,Data Analysis com Pandas,3,Conteúdo razoável,Não
+2025-05-11,Python para Iniciantes,4,Gostei bastante,Sim
+2025-05-10,Python para Iniciantes,4,Excelente curso!,Sim
+2025-05-12,Data Analysis com Pandas,4,Excelente curso!,Sim
+2025-05-04,SQL Essencial,2,Não recomendo,Não
+2025-05-01,Data Analysis com Pandas,1,Muito fraco,Não
+2025-05-11,UI/UX Design,1,Não recomendo,Não
+2025-05-12,Python para Iniciantes,1,Não gostei,Não
+2025-05-07,Data Analysis com Pandas,2,Não recomendo,Não
+2025-05-01,Python para Iniciantes,2,Não gostei,Não
+2025-05-07,Python para Iniciantes,5,Didática ótima,Sim
+2025-05-07,SQL Essencial,1,Muito fraco,Não
+2025-05-11,Data Analysis com Pandas,1,Não gostei,Não
+2025-05-14,Python para Iniciantes,5,Recomendo!,Sim
+2025-05-12,Data Analysis com Pandas,4,Gostei bastante,Sim
+2025-05-12,Data Analysis com Pandas,1,Conteúdo confuso,Não
+2025-05-05,UI/UX Design,2,Conteúdo confuso,Não
+2025-05-03,Data Analysis com Pandas,1,Conteúdo confuso,Não
+2025-05-13,SQL Essencial,4,Gostei bastante,Sim
+2025-05-09,SQL Essencial,2,Aula cansativa,Não
+2025-05-11,Python para Iniciantes,3,Precisa melhorar,Não
+2025-05-03,Data Analysis com Pandas,4,Didática ótima,Sim
+2025-05-11,Python para Iniciantes,3,Precisa melhorar,Sim
+2025-05-08,Python para Iniciantes,1,Muito fraco,Não
+2025-05-11,UI/UX Design,5,Didática ótima,Sim
+2025-05-06,Data Analysis com Pandas,2,Muito fraco,Não
+2025-05-13,SQL Essencial,3,Foi ok,Não
+2025-05-03,Data Analysis com Pandas,5,Recomendo!,Sim
+2025-05-15,Data Analysis com Pandas,5,Gostei bastante,Sim
+2025-05-08,Data Analysis com Pandas,4,Excelente curso!,Sim
+2025-05-14,Python para Iniciantes,5,Muito bom!,Sim
+2025-05-08,SQL Essencial,1,Não recomendo,Não
+2025-05-02,Python para Iniciantes,5,Didática ótima,Sim
+2025-05-01,Data Analysis com Pandas,2,Aula cansativa,Não
+2025-05-01,UI/UX Design,2,Conteúdo confuso,Não
+2025-05-05,Data Analysis com Pandas,4,Muito bom!,Sim
