@@ -1,18 +1,18 @@
 <h2>Exercícios Propostos</h2>
 <ol>
-    <li>Leia o arquivo .csv e imprima todas as linhas no console;</li>
+    <li>Leia o arquivo <code>.csv</code> e imprima todas as linhas no console;</li>
     <li>Exiba apenas o nome do produto e o preço de cada linha;</li>
-    <li>Conte quantas linhas o arquivo .csv possui;</li>
-    <li>Some o total de valores da coluna "preco";</li>
+    <li>Conte quantas linhas o arquivo <code>.csv</code> possui;</li>
+    <li>Some o total de valores da coluna <code>preco</code>;</li>
     <li>Calcule o valor total de cada venda e exiba linha a linha;</li>
-    <li>Conte quantas vezes cada produto aparece no arquivo .csv usando dicionário;</li>
+    <li>Conte quantas vezes cada produto aparece no arquivo <code>.csv</code> usando dicionário;</li>
     <li>Grave todas as linhas cujo preço seja maior que 100 em um novo arquivo;</li>
     <li>Calcule a média de preços dos produtos;</li>
-    <li>Exiba a maior e a menor quantidade vendida no arquivo .csv;</li>
-    <li>Crie uma lista de dicionários a partir do arquivo .csv;</li>
-    <li>Use Counter para contar a frequência de produtos vendidos no arquivo .csv;</li>
+    <li>Exiba a maior e a menor quantidade vendida no arquivo <code>.csv</code>;</li>
+    <li>Crie uma lista de dicionários a partir do arquivo <code>.csv</code>;</li>
+    <li>Use Counter para contar a frequência de produtos vendidos no arquivo <code>.csv</code>;</li>
     <li>Use Counter para encontrar o produto mais vendido;</li>
-    <li>Leia as colunas "quantidade" e "preco", e use <code>defaultdict(int)</code> para somar o total de unidades vendidas por produto;</li>
+    <li>Leia as colunas <code>quantidade</code> e <code>preco</code>, e use <code>defaultdict(int)</code> para somar o total de unidades vendidas por produto;</li>
     <li>Use <code>defaultdict(list)</code> para agrupar os preços praticados por produto;</li>
     <li>Ordene os produtos por quantidade total vendida;</li>
     <li>Crie uma nova lista contendo somente as vendas em que a quantidade foi maior que 5;</li>
