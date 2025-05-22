@@ -1,6 +1,6 @@
 <h2>⚠️ Aviso</h2>
 
-<p>Esse repositório contém meus estudos pessoais durante a capacitação em Analytics da TATA Consultancy Services (TCS).</p>
+<p>Esse repositório contém meus estudos pessoais durante a capacitação em Analytics fornecido pela TATA Consultancy Services (TCS).</p>
 
 <p>Os dados utilizados são públicos ou simulados. Nenhum conteúdo representa informações restritas, confidencias ou de uso interno da TCS.</p>
 
