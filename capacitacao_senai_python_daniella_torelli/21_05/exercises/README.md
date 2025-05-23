@@ -1,4 +1,4 @@
-<h2>Exercícios Propostos</h2>
+<h2>Exercícios propostos</h2>
 <ol>
     <li>Leia o arquivo <code>.csv</code> e imprima todas as linhas no console;</li>
     <li>Exiba apenas o nome do produto e o preço de cada linha;</li>
