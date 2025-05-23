@@ -94,10 +94,13 @@ print('--------------------------------------------------')
 
 # Exercise 1.1
 
+print('Série "decade":')
 print(df['decade'])
 print('--------------------------------------------------')
 
 # Exercise 1.2
+
+print('Quantidade de filmes por década:')
 
 print(df.groupby('decade')['name'].count())
 print('--------------------------------------------------')
@@ -109,11 +112,11 @@ print('--------------------------------------------------')
 # Exercise 1.3
 
 decade_counter = df.groupby('decade')['name'].count()
-print(df['decade'].value_counts().head(1)) # Option 1
+print(f'Década com mais filmes: {df['decade'].value_counts().head(1)}') # Option 1
 print('--------------------------------------------------')
 
 aux =decade_counter.sort_values(ascending = False) # Option 2
-print(aux.head(1))
+print(f'Década com mais filmes: {aux.head(1)}')
 print('--------------------------------------------------')
 
 # Exercise 1.4
@@ -185,6 +188,7 @@ df_filtered_by_directors = df[df['directors'].isin(directors_more_3_movies)]
 
 averages = df_filtered_by_directors.groupby('directors')['rating'].mean()
 
+print('Nota média dos filmes de cada diretor:')
 print(averages.sort_values(ascending = False))
 print('--------------------------------------------------')
 
@@ -197,6 +201,8 @@ director_high_ranking_movie = df.sort_values(by='rating', ascending = False)['di
 director_most_ranking_movie = director_high_ranking_movie.head(1)
 
 print(f'Diretor do filme mais bem avaliado: {director_most_ranking_movie}')
+print('--------------------------------------------------')
+
 
 # Exercise 2.5 
 
@@ -205,6 +211,7 @@ directors_summary = df.groupby('directors').agg(
     ranking_average=('rating', 'mean')
 ).reset_index()
 
+print('DataFrame com diretor, nome e nota dos filmes:')
 print(directors_summary)
 print('--------------------------------------------------')
 
@@ -233,6 +240,7 @@ def categorize_duration(duration):
 
 df['duration_category'] = df['duration'].apply(categorize_duration)
 
+print('Categoriza filmes em "Curto", "Médio", "Longo":')
 print(df['duration_category'])
 print('--------------------------------------------------')
 
@@ -240,6 +248,7 @@ print('--------------------------------------------------')
 
 movies_by_category = df['duration_category'].value_counts()
 
+print('Quantidade de filmes por categoria:')
 print(movies_by_category)
 print('--------------------------------------------------')
 
@@ -248,6 +257,7 @@ print('--------------------------------------------------')
 
 average_by_category = df.groupby('duration_category')['rating'].mean()
 
+print('Nota média por categoria de filme:')
 print(average_by_category)
 print('--------------------------------------------------')
 
@@ -255,6 +265,40 @@ print('--------------------------------------------------')
 
 comum_category = movies_by_category.sort_values(ascending = False)
 
+print('Categoria de filme mais comum:')
 print(comum_category.head(1))
 print('--------------------------------------------------')
 
+'''
+4. Filmes por ano:
+4.1. Quantos filmes foram lançados em cada ano?;
+4.2. Qual ano teve mais filmes no Top 250?;
+4.3. Quais os filmes lançados entre 1990 e 1999 com nota acima de 3?;
+4.4. Exporte esses filmes outro arquivo .csv.
+'''
+
+# Exercise 4.1
+
+movies_by_year = df['year_format'].value_counts()
+
+print('Filmes lançados por ano:')
+print(movies_by_year)
+print('--------------------------------------------------')
+
+# Exercise 4.2
+
+print('Ano com mais filmes:')
+print(movies_by_year.head(1))
+print('--------------------------------------------------')
+
+# Exercise 4.3 
+
+movies_decade90_rating3plus = df[(df['decade'] == 1990) & (df['rating'] > 3)]
+
+print('Filmes lançados entre 1990 e 1999 com nota acima de 3:')
+print(movies_decade90_rating3plus[['name', 'rating', 'year_format']])
+print('--------------------------------------------------')
+
+# Exercise 4.4
+
+movies_decade90_rating3plus[['name', 'rating', 'year_format']].to_csv('capacitacao_senai_python_daniella_torelli/22_05/csv/decade90_movies_rating3plus_summary.csv', index = False)
