@@ -25,20 +25,21 @@ print('--------------------------------------------------')
 
 # Exercise 2
 
-print(f'Média das avaliações dos filmes: {df['rating'].mean():.2f}')
+print(f'Média das avaliações dos {df.shape[0]} filmes: {df['rating'].mean():.2f}')
 print('--------------------------------------------------')
 
 # Exercise 3
 
-years_ascends = df.sort_values('year')
-print('5 Filmes mais antigos:')
-print(years_ascends.head(5)['name'])
+df['year_format'] = df['year'].dt.year
 
+years_ascends = df.sort_values('year')
+
+print('5 Filmes mais antigos:')
+print(years_ascends.head(5)[['name', 'year_format']])
 print('--------------------------------------------------')
 
 print('5 Filmes mais novos:')
-print(years_ascends.tail(5)['name'])
-
+print(years_ascends.tail(5)[['name', 'year_format']])
 print('--------------------------------------------------')
 
 # Exercise 4
@@ -64,13 +65,13 @@ print('--------------------------------------------------')
 
 # Exercise 7
 
-print('Filmes com m ais de 3 horas (180 minutos):')
-print(df.loc[df['duration'] > 180]['name'])
+print('Filmes com mais de 3 horas de duração (180 minutos):')
+print(df.loc[df['duration'] > 180][['name', 'duration']])
 print('--------------------------------------------------')
 
 # Exercise 8
 
-top = df.groupby('name')['rating'].max()
+top = df.groupby('name')['rating'].first() # Usando qualquer método para indexar e formar uma Série/DateFrame
 top10 = top.sort_values(ascending = False).head(10)
 not_top10 = top.sort_values(ascending = False).tail(10)
 
