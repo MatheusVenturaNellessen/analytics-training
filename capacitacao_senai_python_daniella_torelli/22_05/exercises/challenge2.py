@@ -86,9 +86,9 @@ print('--------------------------------------------------')
 '''
 1. Análise de décadas
 1.1. Crie uma nova coluna chamada Década;
-1.2. Agrupe os filmes por década e mostre quantos filmes há em cada.
-1.3. Qual foi a década com mais filmes no Top 250?
-1.4. Para cada década, calcule a nota média e duração média dos filmes.
+1.2. Agrupe os filmes por década e mostre quantos filmes por década;
+1.3. Qual foi a década com mais filmes no Top 250?;
+1.4. Por década, calcule a nota média e duração média dos filmes;
 1.5. Salve esse resumo em um novo arquivo .csv chamado decades_summary.csv.
 '''
 
@@ -126,3 +126,86 @@ print('--------------------------------------------------')
 # Exercise 1.5 
 
 decade_average.to_csv('capacitacao_senai_python_daniella_torelli/22_05/csv/decades_summary.csv', index = True)
+
+
+'''
+2. Diretores e frequência:
+2.1. Quantos diretores diferentes existem na lista?;
+2.2. Quais são os 5 diretores mais frequentes?;
+2.3. Qual é a nota média dos filmes de cada diretor (>= 3 filmes)?;
+2.4. Qual diretor tem o filme mais bem avaliado?;
+2.5. Exporte para .csv um ranking com diretor, quantidade de filmes, nota média.
+'''
+
+# Exercise 2.1
+
+# print(df['directors'].count)
+
+df['directors'] = df['directors'].str.split(',')
+# print(directors_split)
+
+df = df.explode('directors')
+# print(directors_exploded)
+
+df['directors'] = df['directors'].str.strip()
+
+unique_directors = df['directors'].nunique()
+
+print(f'Total de diretores: {unique_directors}')
+print('--------------------------------------------------')
+
+# print(df['directors'])
+# print('FUNCIONOU!!!')
+
+# Exercise 2.2
+
+print('Os 5 diretores mais frequentes e quantas vezes aparecem no DataFrame:')
+print((df['directors'].value_counts()).head(5))
+print('--------------------------------------------------')
+
+# Exercise 2.3
+
+# directors_counter = df['directors'].value_counts()
+
+# directors_more_than3_movies = directors_counter[directors_counter >= 3]
+
+# print(directors_more_than3_movies.groupby(['directors'])['rating'].mean())
+
+# directors_counter = df['directors'].value_counts()
+
+# if directors_counter[directors_counter >= 3]:
+
+#     print(df.groupby('directors')[['rating']].mean())
+
+directors_counter = df['directors'].value_counts()
+
+directors_more_3_movies = directors_counter[directors_counter >= 3].index
+
+df_filtered_by_directors = df[df['directors'].isin(directors_more_3_movies)]
+
+averages = df_filtered_by_directors.groupby('directors')['rating'].mean()
+
+print(averages.sort_values(ascending = False))
+print('--------------------------------------------------')
+
+# Exercise 2.4
+
+director_high_ranking_movie = df.sort_values(by='rating', ascending = False)['directors']
+
+# print(director_high_ranking_movie)
+
+director_most_ranking_movie = director_high_ranking_movie.head(1)
+
+print(f'Diretor do filme mais bem avaliado: {director_most_ranking_movie}')
+
+# Exercise 2.5 
+
+directors_summary = df.groupby('directors').agg(
+    qtd_movies=('name', 'count'),
+    ranking_average=('rating', 'mean')
+).reset_index()
+
+print(directors_summary)
+print('--------------------------------------------------')
+
+directors_summary.to_csv('capacitacao_senai_python_daniella_torelli/22_05/csv/directors_summary.csv', index = False)
