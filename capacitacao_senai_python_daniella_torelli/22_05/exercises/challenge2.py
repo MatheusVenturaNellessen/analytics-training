@@ -209,3 +209,52 @@ print(directors_summary)
 print('--------------------------------------------------')
 
 directors_summary.to_csv('capacitacao_senai_python_daniella_torelli/22_05/csv/directors_summary.csv', index = False)
+
+'''
+3. Filmes por duração:
+3.1. Crie uma nova coluna chamada com base nas regras:
+    - Curto se duração < 90 min;
+    - Médio se entre 90 e 150;
+    - Longo se > 150.
+3.2. Mostre quantos filmes tem em cada categoria;
+3.3. Qual a nota média de cada categoria?;
+3.4. Qual categoria é mais comum no Top 250?
+'''
+
+# Exercise 3.1
+
+def categorize_duration(duration):
+    if duration < 90:
+        return 'Curto'
+    elif duration <= 150:
+        return 'Médio'
+    else:
+        return 'Longo'
+
+df['duration_category'] = df['duration'].apply(categorize_duration)
+
+print(df['duration_category'])
+print('--------------------------------------------------')
+
+# Exercise 3.2
+
+movies_by_category = df['duration_category'].value_counts()
+
+print(movies_by_category)
+print('--------------------------------------------------')
+
+
+# Exercise 3.3 
+
+average_by_category = df.groupby('duration_category')['rating'].mean()
+
+print(average_by_category)
+print('--------------------------------------------------')
+
+# Exercise 3.4
+
+comum_category = movies_by_category.sort_values(ascending = False)
+
+print(comum_category.head(1))
+print('--------------------------------------------------')
+
