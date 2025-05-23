@@ -1,5 +1,7 @@
-<h2>Objetivo</h2>
+<h2>Proposta</h2>
 
-<p>A proposta é manipular e tratar dados tabulares em arquivos <code>.csv</code> utilizando <strong>Python</strong> e <strong>Pandas</strong> fim de aprender suas funcionalidades e manipulação/tratamento eficiente e otimizado de dados.</p>
+<p>Manipular dados tabulares em arquivos <code>.csv</code> utilizando <strong>Python</strong> e <strong>Pandas</strong> fim de aprender as funcionalidades da tecnologias e a tratar dados de forma otimizada e eficiente.</p>
 
-<p>Os exercícios práticos estão localizados no diretório <code>exercises/</code> e as suas propostas estão comentadas em cada início de arquivo <code>.py</code>.<br><br>Os dados tabulares estão localizados na pasta <code>csv/</code>.</p>
+<p>Os exercícios de fixação estão localizados no diretório <code>exercises/</code> e as suas propostas estão comentadas em cada início de arquivo <code>.py</code>.</p>
+
+<p>Os arquivos <code>.csv</code> utilizados nos exercícios estão localizados no diretório <code>csv/</code>.</p>
