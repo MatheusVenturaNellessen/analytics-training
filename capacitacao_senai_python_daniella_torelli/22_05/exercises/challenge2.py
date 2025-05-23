@@ -302,3 +302,59 @@ print('--------------------------------------------------')
 # Exercise 4.4
 
 movies_decade90_rating3plus[['name', 'rating', 'year_format']].to_csv('capacitacao_senai_python_daniella_torelli/22_05/csv/decade90_movies_rating3plus_summary.csv', index = False)
+
+'''
+5. Análise textual (coluna "Title"):
+5.1. Quantos filmes contêm a palavra "Love" no título?;
+5.2. Liste os filmes que têm a palavra "War", "God" ou "King" no título;
+5.3. Crie uma nova coluna com os títulos em letras maiúsculas;
+5.4. Quantos títulos têm mais de 25 caracteres?;
+5.5. Qual o título mais longo da lista?
+'''
+
+# Exercise 5.1
+
+print(f'Quantidade de filmes que contém a palavra "Love": {df['name'].str.contains('Love').sum()}')
+print('--------------------------------------------------')
+
+# Exercise 5.2 
+
+filter = df['name'].str.contains(r"\bWar|God|King\b", case = False, na = False)
+
+print('Filmes que contém a(s) palavra(s) "War", "God" e/ou "King" em seu título:')
+print(df[filter]['name'])
+print('--------------------------------------------------')
+
+# Exercise 5.3
+
+df['name_upper_case'] = df['name'].str.upper()
+print('Serie "name_upper_case":')
+print(df['name_upper_case'])
+print('--------------------------------------------------')
+
+# Exercise 5.4 
+
+print('Quantidade de filmes com títulos com mais de 25 caracteres:')
+print(df['name'].str.len().gt(25).sum())
+print('--------------------------------------------------')
+
+# Exercise 5.5
+
+longest_name = df.loc[df['name'].str.len().idxmax()] # Retorna o index
+print(f'Filme com título mais longo: {longest_name['name']}')
+print('--------------------------------------------------')
+
+'''
+6. Filtros múltiplos:
+6.1. Mostre todos os filmes:
+    - Nota >= 9;
+    - Duração <= 100;
+    - Lançados após o ano 2000;
+6.2. Filtre os filmes que:
+    - Têm duração entre 120 e 150 minutos;
+    - Foram dirigidos por "Christopher Nolan";
+    - Estão entre os 50 primeiros do ranking;
+    - Exporte para outro arquivo .csv;
+6.3. Mostre os filmes com título iniciado pela letra "A" e nota acima de 8.0;
+6.4. Liste todos os filmes que não foram dirigidos por "Steven Spielberg"
+'''
