@@ -77,8 +77,52 @@ not_top10 = top.sort_values(ascending = False).tail(10)
 
 print('10 Filmes mais avaliados:')
 print(top10)
-
 print('--------------------------------------------------')
 
 print('10 Filmes menos avaliados:')
 print(not_top10)
+print('--------------------------------------------------')
+
+'''
+1. Análise de décadas
+1.1. Crie uma nova coluna chamada Década;
+1.2. Agrupe os filmes por década e mostre quantos filmes há em cada.
+1.3. Qual foi a década com mais filmes no Top 250?
+1.4. Para cada década, calcule a nota média e duração média dos filmes.
+1.5. Salve esse resumo em um novo arquivo .csv chamado decades_summary.csv.
+'''
+
+# Exercise 1.1
+
+print(df['decade'])
+print('--------------------------------------------------')
+
+# Exercise 1.2
+
+print(df.groupby('decade')['name'].count())
+print('--------------------------------------------------')
+
+movies_decades = df.groupby('decade')['name'].apply(list)
+print(movies_decades)
+print('--------------------------------------------------')
+
+# Exercise 1.3
+
+decade_counter = df.groupby('decade')['name'].count()
+print(df['decade'].value_counts().head(1)) # Option 1
+print('--------------------------------------------------')
+
+aux =decade_counter.sort_values(ascending = False) # Option 2
+print(aux.head(1))
+print('--------------------------------------------------')
+
+# Exercise 1.4
+
+decade_average = df.groupby('decade')[['rating', 'duration']].mean()
+print('Media de avaliações (0-10) e duração (em minutos) dos filmes por década:')
+print(decade_average)
+print('--------------------------------------------------')
+
+# Exercise 1.5 
+
+decade_average.to_csv('capacitacao_senai_python_daniella_torelli/22_05/csv/decades_summary.csv', index = True)
