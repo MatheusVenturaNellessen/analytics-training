@@ -1,6 +1,7 @@
-<h2>Objetivo</h2>
+<h2>Proposta</h2>
 
-<p>A proposta foi manipular e tratar dados em arquivos .csv com a <strong>Python</strong> sem nenhuma biblioteca/framework fim de aprender a lógica da linguagem nativa.</p>
+<p>Manipular dados tabulares em arquivos <code>.csv</code> utilizando <strong>Python</strong> e <strong>Pandas</strong> fim de aprender a lógica de tratamento de dados com a linguagem nativa.</p>
 
-<p>Os exercícios práticos estão localizados no diretório <code>exercises/</code> e as suas propostas estão documentadas em <code>README.md</code> localizado dentro da pasta <code>exercises/</code>.<br><br>Os dados tabulares estão localizados na pasta <code>csv/</code>.</p>
+<p>Os exercícios de fixação estão localizados no diretório <code>exercises/</code> e as suas propostas estão documentadas dentro do mesmo diretório.</p>
 
+<p>Os arquivos <code>.csv</code> utilizados nos exercícios estão localizados no diretório <code>csv/</code>.</p>
