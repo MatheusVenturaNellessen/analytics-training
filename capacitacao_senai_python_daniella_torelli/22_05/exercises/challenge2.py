@@ -348,7 +348,7 @@ print('--------------------------------------------------')
 6. Filtros múltiplos:
 6.1. Mostre todos os filmes:
     - Nota >= 9;
-    - Duração <= 100;
+    - Duração <= 100 minutos;
     - Lançados após o ano 2000;
 6.2. Filtre os filmes que:
     - Têm duração entre 120 e 150 minutos;
@@ -358,3 +358,53 @@ print('--------------------------------------------------')
 6.3. Mostre os filmes com título iniciado pela letra "A" e nota acima de 8.0;
 6.4. Liste todos os filmes que não foram dirigidos por "Steven Spielberg"
 '''
+
+# Exercise 6.1
+
+filter_6_1 = df[
+    (df['rating'] >= 8) &
+    (df['duration'] <= 100) &
+    (df['year_format'] > 2000)
+].drop_duplicates(subset = ['name'])
+
+print('Filmes com nota igual ou maior a 8, duração menor ou igual a 100 minutos e pós anos 2000:')
+print(filter_6_1[['name', 'rating', 'duration', 'year_format']])
+print('--------------------------------------------------')
+
+# Exercise 6.2
+
+filter_6_2 = df[
+    (df['duration'] >= 120) &
+    (df['duration'] <= 150) &
+    (df['directors'] == 'Christopher Nolan') &
+    (df['rank'] <= 50)
+]
+
+filter_6_2.to_csv('capacitacao_senai_python_daniella_torelli/22_05/csv/filter_6_2.csv', index = False)
+
+print('Filmes de 120 a 150 minutos, de Christopher Nolan e estão no top 50:')
+print(filter_6_2[['rank', 'name', 'rating', 'duration']])
+print('--------------------------------------------------')
+
+# Exercise 6.3
+
+filter_6_3 = df[
+    df['name'].str.startswith('A') &
+    (df['rating'] > 8.0)
+].drop_duplicates(subset = ['name'])
+
+print("Filmes com título iniciando em 'A' e nota maior que 8.0:")
+print(filter_6_3[['name', 'rating']])
+print('--------------------------------------------------')
+
+# Exercise 6.4
+
+filter_6_4 = df[
+    df['directors'] != 'Steven Spielberg'
+]
+
+print("Filmes sem direção de Steven Spielberg:")
+print(filter_6_4[['name', 'directors']])
+print('--------------------------------------------------')
+
+print('\nFim.\n')
