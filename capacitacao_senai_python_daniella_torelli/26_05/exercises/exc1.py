@@ -17,7 +17,7 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns 
+import seaborn as sns
 
 df = pd.read_csv('capacitacao_senai_python_daniella_torelli/26_05/exercises/csv/statistics_visualization.csv', sep=',', encoding='utf-8')
 
@@ -43,7 +43,7 @@ print('--------------------------------------------------')
 print(f'Moda dos salários: {moda_salario.values[0]}')
 print('--------------------------------------------------')
 
-# exercício 1.3  
+# exercício 1.3
 
 mediana_idade = df['idade'].median()
 mediana_salario = df['salario'].median()
@@ -54,7 +54,7 @@ print('--------------------------------------------------')
 print(f'Mediana dos salários: {mediana_salario}')
 print('--------------------------------------------------')
 
-# Exercício 1.4  
+# Exercício 1.4
 
 variancia_idade = df['idade'].var()
 variancia_salario = df['salario'].var()
@@ -65,10 +65,10 @@ print('--------------------------------------------------')
 print(f'Variância dos salários: {variancia_salario}')
 print('--------------------------------------------------')
 
-# Exercício 1.5 
+# Exercício 1.5
 
-amplitude_idade = df['idade'].max() - df['idade'].min() 
-amplitude_salario = df['salario'].max() - df['salario'].min() 
+amplitude_idade = df['idade'].max() - df['idade'].min()
+amplitude_salario = df['salario'].max() - df['salario'].min()
 
 print(f'Amplitude das idades: {amplitude_idade}')
 print('--------------------------------------------------')
@@ -76,14 +76,14 @@ print('--------------------------------------------------')
 print(f'Amplitude dos salários: {amplitude_salario}')
 print('--------------------------------------------------')
 
-# Exercício 2 
+# Exercício 2
 
 def categorizar_idade(idade):
     if idade <= 25:
         return 'Jovem'
     elif idade < 46:
         return 'Adulto'
-    else: 
+    else:
         return 'Sênior'
 
 df['faixa_etaria'] = df['idade'].apply(categorizar_idade)
@@ -122,4 +122,3 @@ plt.ylabel('Salário (em Reais)')
 plt.legend(title='Departamento', bbox_to_anchor=(1.01, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
-
