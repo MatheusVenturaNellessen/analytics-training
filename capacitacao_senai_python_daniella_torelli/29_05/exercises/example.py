@@ -2,7 +2,7 @@ import sqlite3 # Importa SQL nativo do Python
 import pandas as pd # Utiliza o SQLite
 import streamlit as st # Exibe em aplicação web
 
-conn = sqlite3.connect("produtos.db") # Conecta ou cria um banco de dados SQLite
+conn = sqlite3.connect("capacitacao_senai_python_daniella_torelli/29_05/exercises/db/produtos.db") # Conecta ou cria um banco de dados SQLite
 cursor = conn.cursor() # Cria um cursos (?)
 
 cursor.execute('''
