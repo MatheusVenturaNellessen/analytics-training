@@ -8,7 +8,7 @@
 # 	3.4 Número de livros por categoria (agrupado).
 # 	3.5 Formulário para registrar novo empréstimo ou novo livro.
 # 	3.6 Formulário para editar um pedido (alterar a quantidade de itens)
-# 	3.7 Formulário para editar um Produto (alterar preço, nome,
+# 	3.7 Formulário para editar um Produto (alterar título, nome, categoria,
 # quantidade disponível)
 # 	3.8 Formulário para Deletar um livro ou autor.
 
@@ -181,7 +181,7 @@ st.dataframe(df_filtro_34)
 
 st.subheader("Formulário para inserir novo livro")
 
-with st.form("form_inserir"):
+with st.form("form_inserir_novo_livro"):
     titulo = st.text_input("Título do livro:").strip()
 
     # 1) Input do tipo TEXT p/ buscar autor
@@ -278,7 +278,7 @@ if enviar:
                 titulo,
                 autor_id,
                 categoria,
-                data_pub.isoformat(), # YYYY-MM-DD
+                data_pub.year, # YYYY-MM-DD
                 qtd,
             ),
         )
@@ -287,4 +287,213 @@ if enviar:
 
         st.success("Livro inserido com sucesso!")
 
+# Exercício 3.6: Exibir formulário para editar um pedido (alterar a quantidade de livros)
 
+st.subheader("Formulário para Editar Quantidade de Livros")
+
+with st.form("form_editar_qtd_livro"):
+    # 1) Carrega id, título e quantidade atual
+    livros_df = pd.read_sql_query(
+        "SELECT id, titulo, quantidade_disponivel FROM livros ORDER BY titulo",
+        conn
+    )
+
+    # 2) Monta a lista de títulos
+    titulos = livros_df['titulo'].tolist()
+    selecionado = st.selectbox("Título do livro:", titulos)
+
+    # 3) Busca a quantidade atual para usar como valor inicial
+    quantidade_atual = int(
+        livros_df.loc[livros_df['titulo'] == selecionado, 'quantidade_disponivel']
+        .iloc[0]
+    )
+
+    # 4) Campo de número, já com o valor atual
+    nova_qtd = st.number_input(
+        "Nova quantidade disponível:",
+        min_value=0,
+        step=1,
+        value=quantidade_atual
+    )
+
+    # 5) Botão de submit do form
+    botao = st.form_submit_button("Alterar Quantidade")
+
+    if botao:
+        # Validação simples
+        if selecionado and nova_qtd >= 0:
+            # Pega o id correspondente
+            livro_id = int(
+                livros_df.loc[livros_df['titulo'] == selecionado, 'id']
+                .iloc[0]
+            )
+
+            # Comando UPDATE
+            cursor.execute(
+                """
+                UPDATE livros
+                SET quantidade_disponivel = ?
+                WHERE id = ?
+                """,
+                (nova_qtd, livro_id)
+            )
+            conn.commit()
+
+            st.success(
+                f"Quantidade do livro “{selecionado}” alterada de "
+                f"{quantidade_atual} para {nova_qtd}!"
+            )
+        else:
+            st.error("Por favor, selecione um livro e informe uma quantidade válida.")
+
+# Exercício 3.7: Formulário para editar um Produto (editar título, autor, categoria, ano de publicação e quantidade disponíveis de exemplares)
+
+st.subheader('Formulário para Editar Características dos Livros')
+
+with st.form('form_editar_livro'):
+    # 1) Carrega dados dos livros
+    df_livros_originais = pd.read_sql_query(
+        "SELECT * FROM livros ORDER BY titulo",
+        conn
+    )
+
+    titulos_originais = df_livros_originais['titulo'].tolist()
+
+    # 2) Seleção do livro original
+    titulo_original = st.selectbox('Título do livro:', titulos_originais)
+
+    livro = df_livros_originais.loc[df_livros_originais['titulo'] == titulo_original].iloc[0]
+
+    livro_id = int(livro['id'])
+
+    # Valores atuais para inicializar os inputs
+    original_autor_id   = int(livro['autor_id'])
+    original_categoria  = int(livro['categoria_id'])
+    original_ano        = int(livro['ano'])
+    original_qtd        = int(livro['quantidade_disponivel'])
+
+    # 3) Input para editar título (já preenchido)
+    editar_titulo = st.text_input(
+        'Editar título:',
+        value=titulo_original
+    )
+
+    # 4) Input para editar autor
+    df_autores_originais = pd.read_sql_query(
+        "SELECT * FROM autores ORDER BY nome",
+        conn
+    )
+
+    autor_ids = df_autores_originais['id'].tolist()
+
+    nome_por_id = dict(zip(df_autores_originais['id'], df_autores_originais['nome']))
+
+    editar_autor = st.selectbox(
+        'Editar autor:',
+        options=autor_ids,
+        format_func=lambda aid: nome_por_id[aid],
+        index=autor_ids.index(original_autor_id)
+    )
+
+    # 5) Input para editar categoria
+    df_categorias = pd.read_sql_query(
+        "SELECT * FROM categorias ORDER BY nome",
+        conn
+    )
+
+    categorias_ids = df_categorias['id'].tolist()
+
+    cat_por_id = dict(zip(df_categorias['id'], df_categorias['nome']))
+
+    editar_categoria = st.selectbox(
+        'Editar categoria:',
+        options=categorias_ids,
+        format_func=lambda cid: cat_por_id[cid],
+        index=categorias_ids.index(original_categoria)
+    ) # !!!
+
+    # 6) Input para editar ano e quantidade
+    editar_ano = st.number_input(
+        'Editar ano:',
+        min_value=1900,
+        max_value=2025,
+        value=original_ano
+    )
+    editar_qtd_disponivel = st.number_input(
+        'Editar quantidade disponível:',
+        min_value=0,
+        value=original_qtd
+    )
+
+    # 7) Botão de submit
+    enviar = st.form_submit_button('Editar Livro')
+
+    if enviar:
+        # validação básica
+        if editar_titulo.strip() and editar_qtd_disponivel >= 0:
+            cursor.execute(
+                """
+                UPDATE livros
+                SET titulo                = ?,
+                    autor_id              = ?,
+                    categoria_id          = ?,
+                    ano                   = ?,
+                    quantidade_disponivel = ?
+                WHERE id = ?
+                """,
+                (
+                    editar_titulo.strip(),
+                    editar_autor,
+                    editar_categoria,
+                    editar_ano,
+                    editar_qtd_disponivel,
+                    livro_id
+                )
+            )
+
+            conn.commit()
+
+            st.success(f'O livro “{editar_titulo}” foi atualizado com sucesso!')
+        else:
+            st.error("Por favor, preencha todos os campos corretamente.")
+
+# Exercício 3.8: Exibe um formulário para deletar um livro ou autor.
+
+st.subheader('Formulário para Deletar Livro')
+
+with st.form('form_deletar_livro'):
+    df_livros_to_delete = pd.read_sql_query(
+        "SELECT id, titulo FROM livros ORDER BY titulo",
+        conn
+    )
+
+    titulo_to_delete = df_livros_to_delete['titulo'].tolist()
+
+    livro_to_delete_selecionado = st.selectbox(
+        'Selecione um livro:',
+        titulo_to_delete
+    )
+
+    enviar_delecao = st.form_submit_button('Deletar Livro')
+
+    if enviar_delecao:
+        if livro_to_delete_selecionado:
+            livro_to_delete_selecionado_id = int(
+                df_livros_to_delete.loc[
+                    df_livros_to_delete['titulo'] == livro_to_delete_selecionado,
+                    'id'
+                ].iloc[0]
+            )
+
+            cursor.execute(
+                "DELETE FROM livros WHERE id = ?",
+                (livro_id,)
+            )
+            conn.commit()
+
+            st.success(
+                f'Livro “{livro_to_delete_selecionado}” '
+                f'(id={livro_to_delete_selecionado_id}) deletado com sucesso!'
+            )
+        else:
+            st.error('Por favor, selecione um livro corretamente.')
