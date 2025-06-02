@@ -17,7 +17,7 @@ from datetime import datetime, date, timedelta
 import pandas as pd
 import streamlit as st
 
-conn = sqlite3.connect('capacitacao_senai_python_daniella_torelli/29_05/exercises/db/biblioteca.db')
+conn = sqlite3.connect('capacitacao_senai_python_daniella_torelli/29_05_and_30_05/exercises/db/biblioteca.db')
 cursor = conn.cursor()
 
 # Exercício 1
