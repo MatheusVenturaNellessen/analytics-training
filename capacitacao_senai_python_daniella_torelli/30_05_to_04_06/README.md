@@ -1,6 +1,6 @@
 <h2>Propósito do projeto</h2>
 
-<p>O sistema destina-se a gerenciar todas as operações de uma academia de forma integrada, apoiado em um banco de dados <code>SQLite</code> e uma interface web construída com <code>Streamlit</code>. Nele, são definidos seis módulos principais de dados – clientes, instrutores, planos, exercícios, treinos e pagamentos – com tabelas que incluem campos como nome, email, especialidade, preço mensal, série e repetição, data de pagamento e status de quitação.</p>
+<p>Foi desenvolido um sistema destinado a gerenciar todas as operações de uma academia de forma integrada, apoiado em um banco de dados <code>SQLite</code> e uma interface web construída com <code>Streamlit</code>. Nele, são definidos seis módulos principais de dados – clientes, instrutores, planos, exercícios, treinos e pagamentos – com tabelas que incluem campos como nome, email, especialidade, preço mensal, série e repetição, data de pagamento e status de quitação.</p>
 
 <p>O fluxo de trabalho envolve:</p>
 
@@ -34,3 +34,4 @@
 	</li>
 </ol>
 
+<p>O projeto encontra-se em outro repositório, clique <a href="https://github.com/HeitorDalla/gym-system">aqui</a> para visualizá-lo.</p>
