@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 from datetime import date, datetime, timedelta
+import numpy as np
 
 df = pd.read_csv('capacitacao_senai_python_daniella_torelli/05_06/exercises/database/csv_vendas_acai.csv', sep=',', parse_dates=['data_venda'])
 
@@ -14,9 +15,9 @@ df.to_csv('capacitacao_senai_python_daniella_torelli/05_06/exercises/database/cs
 
 # Inicia streamlit
 # Sidebar para navegação
-st.sidebar.title("Navegação")
+st.sidebar.title("Bem vindo(a)!")
 pagina = st.sidebar.selectbox(
-    "Escolha a página:",
+    "Navegue entre as páginas:",
     ["Home", "Filtragens", "Análises Gráficas", "Tabelas"],
     index=0  # Página default (Home) ao abrir o app
 )
@@ -39,13 +40,32 @@ if pagina == "Home":
     col2.metric('Quantidade de Vendas', qtd_vendas)
     col3.metric('Ticket Médio', f'R$ {valor_medio:,.2f}'.replace(",", "@").replace(".", ",").replace("@", "."))
     col3.caption('Valor médio de venda')
-    col4.metric('Quantidade Total de Clientes', qtd_clientes_unique)
+    col4.metric('Quantidade Total de Clientes (únicos)', qtd_clientes_unique)
     col5.metric('Produto mais Vendido', produto_mais_vendido)
     col6.metric('Forma de Pagamento mais Usada', forma_pagamento_mais_usada)
 
+    # Exibe evolução do(s) produto(s)
+
+    with st.expander('Clique aqui para visualizar a evolução de venda do(s) produto(s).'):
+        produtos = sorted(df['produto'].unique().tolist())
+        produto_selected = st.selectbox('Selecione o produto:', produtos)
+
+        df_produto_selected = df[df['produto'] == produto_selected]
+
+        df_produto_selected['ano_mes'] = df_produto_selected['data_venda'].dt.to_period('M')
+
+        vendas_por_produto_selected = df_produto_selected.groupby('ano_mes').size()
+
+        fig10, ax10 = plt.subplots()
+        vendas_por_produto_selected.plot(ax=ax10, marker='o')
+        ax10.set_title(f'Evolução das vendas de "{produto_selected}"')
+        ax10.set_xlabel('Data da venda (em dias)')
+        ax10.set_ylabel('Quantidade de vendas')
+        st.pyplot(fig10)
+
 elif pagina == "Filtragens":
     # 1º filtro: somatório de "valor_total" por "categoria"
-    st.header('Somatória do Valor Total por Categoria')
+    st.header('Somatória: Valor Total por Categoria')
 
     categorias = sorted(df['categoria'].unique())
 
@@ -57,7 +77,7 @@ elif pagina == "Filtragens":
     st.write(f"A soma do valor total para a categoria **{categorias_opt}** é: R$ {soma_valor_total_por_categoria:,.2f}".replace(",", "@").replace(".", ",").replace("@", "."))
 
     # 2º filtro: média do "valor_total" agrupada por "forma_pagamento"
-    st.header('Valor Médio de Venda por Método de Pagamento')
+    st.header('Valor de Venda Médio por Método de Pagamento')
 
     formas_pagamento = sorted(df['forma_pagamento'].unique())
 
@@ -68,7 +88,7 @@ elif pagina == "Filtragens":
     st.markdown(f'O valor médio de venda feito com **{forma_pagamento_opt}** foi: **R$ {media_valor_total:,.2f}**'.replace(",", "@").replace(".", ",").replace("@", "."))
 
     # 3º filtro: top 3 clientes
-    st.header('Top 3 Clientes')
+    st.header('Os 3 Maiores Clientes')
 
     valor_total_por_cliente = df.groupby('cliente')['valor_total'].sum().sort_values(ascending=False)
 
@@ -83,7 +103,7 @@ elif pagina == "Filtragens":
 
 elif pagina == "Análises Gráficas":
     # 1º gráfico
-    st.subheader('Quantidade de produtos mais vendidos')
+    st.header('Produtos mais Vendidos')
 
     top5_produtos = df['produto'].value_counts().head(5)
 
@@ -94,7 +114,7 @@ elif pagina == "Análises Gráficas":
     st.pyplot(fig1)
 
     # 2º gráfico
-    st.subheader('Quantidade de Vendas por Categoria(s)')
+    st.header('Vendas por Categorias')
 
     categorias = sorted(df['categoria'].unique())
 
@@ -111,7 +131,7 @@ elif pagina == "Análises Gráficas":
     st.pyplot(fig2)
 
     # 3º gráfico
-    st.subheader('Quantidade de Vendas por Produto(s)')
+    st.header('Vendas por Produtos')
 
 
     produtos = sorted(df['produto'].unique())
@@ -129,7 +149,7 @@ elif pagina == "Análises Gráficas":
     st.pyplot(fig3)
 
     # 4º gráfico
-    st.subheader('Quantidade de Vendas por Horário')
+    st.header('Vendas por Horário')
 
     df['hora'] = df['data_venda'].dt.hour
 
@@ -142,7 +162,7 @@ elif pagina == "Análises Gráficas":
     st.pyplot(fig4)
 
     # 5º gráfico
-    st.subheader('Quantidade de Vendas por Dias da Semana')
+    st.header('Vendas por Dias da Semana')
 
     df['dia_semana'] = df['data_venda'].dt.day_name()
 
@@ -171,9 +191,54 @@ elif pagina == "Análises Gráficas":
     plt.xticks(rotation=45)
     st.pyplot(fig5)
 
+    # 6º gráfico
+    st.header('Distribuição: Formas de Pagamento')
+
+    qtd_formas_pagamento = df['forma_pagamento'].value_counts()
+
+    fig6, ax6 = plt.subplots()
+    ax6.pie(qtd_formas_pagamento, labels=qtd_formas_pagamento.index, autopct='%1.2f%%', startangle=90)
+    ax6.set_title('Distribuição das Formas de Pagamento (%)')
+    st.pyplot(fig6)
+
+    # 7º gráfico
+    st.header('Somatório: Vendas por Formas de Pagamento')
+
+    def func_abs(values):
+        def my_autopct(pct):
+            total = np.sum(values)
+            val = int(round(pct * total / 100.0))
+            return f"R$ {val:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+        return my_autopct
+
+    group_formas_pagamento_by_valor_total = df.groupby('forma_pagamento')['valor_total'].sum()
+
+    fig8, ax8 = plt.subplots()
+    ax8.pie(
+        group_formas_pagamento_by_valor_total,
+        labels=group_formas_pagamento_by_valor_total.index,
+        autopct=func_abs(group_formas_pagamento_by_valor_total.values),
+        startangle=90
+    )
+    ax8.set_title('Somatório de Vendas por Formas de Pagamento')
+    st.pyplot(fig8)
+
+    # 8º gráfico
+    st.header('Comparação de Vendas por Mês')
+
+    df['mes'] = df['data_venda'].dt.month
+
+    qtd_vendas_por_mes = df['mes'].value_counts().sort_index()
+
+    fig9, ax9 = plt.subplots()
+    qtd_vendas_por_mes.plot(ax=ax9, marker='o')
+    ax9.set_xlabel('Mês')
+    ax9.set_ylabel('Quantidade de vendas')
+    st.pyplot(fig9)
+
 elif pagina == "Tabelas":
     # 1ª tabela: filtra por período
-    st.header('Tabela por período')
+    st.header('Filtro por Períodos')
 
     data_min = df['data_venda'].min()
     data_max = df['data_venda'].max()
@@ -195,7 +260,7 @@ elif pagina == "Tabelas":
         st.dataframe(df_filtro_data_venda)
 
     # 2ª tabela: filtra por forma(s) de pagamento
-    st.header('Tabela por formas de pagamentos')
+    st.header('Filtro por Formas de Pagamentos')
 
     forma_pagamento_opt = st.selectbox(
         'Selecione a forma de pagamento:',
@@ -208,7 +273,7 @@ elif pagina == "Tabelas":
         st.dataframe(df_filtro_forma_pagamento)
 
     # 3ª tabela: filtra por cliente
-    st.header('Tabela por clientes')
+    st.header('Filtro por Clientes')
 
     clientes = sorted(df['cliente'].unique())
 
@@ -221,4 +286,55 @@ elif pagina == "Tabelas":
 
     with st.expander("Clique aqui para ver a tabela"):
         st.dataframe(df_filtro_cliente)
+
+    # 4ª tabela: filtros interativos
+    st.header('Filtros por Formas de Pagamento, Categorias, Cliente e Mês')
+
+    df['mes'] = df['data_venda'].dt.month
+
+    # Filtro por categoria
+    categorias_list = sorted(df['categoria'].unique().tolist())
+    categorias_selected = st.multiselect(
+        "Selecione a(s) categoria(s):",
+        options=categorias_list,
+        default=categorias_list
+    )
+
+    # Filtro por mês
+    mes_list = sorted(df['mes'].unique().tolist())
+    mes_selected = st.multiselect(
+        'Selecione o mês:',
+        options=mes_list,
+        default=mes_list
+    )
+
+    # Filtro por forma de pagamento
+    formas_pagamento_list = sorted(df['forma_pagamento'].unique().tolist())
+    formas_pagamento_selected = st.multiselect(
+        "Selecione a(s) forma(s) de pagamento:",
+        options=formas_pagamento_list,
+        default=formas_pagamento_list
+    )
+
+    # Filtro por cliente
+    clientes_list = ['Todos'] + sorted(df['cliente'].unique().tolist())
+    cliente_selected = st.selectbox("Selecione o cliente:", clientes_list)
+
+    # Filtra o DataFrame conforme seleção
+    df_filtrado = df.copy()
+
+    if categorias_selected and len(categorias_selected) < len(categorias_list):
+        df_filtrado = df_filtrado[df_filtrado['categoria'].isin(categorias_selected)]
+
+    if mes_selected and len(mes_selected) < len(mes_list):
+        df_filtrado = df_filtrado[df_filtrado['mes'].isin(mes_selected)]
+
+    if formas_pagamento_selected and len(formas_pagamento_selected) < len(formas_pagamento_list):
+        df_filtrado = df_filtrado[df_filtrado['forma_pagamento'].isin(formas_pagamento_selected)]
+
+    if cliente_selected != 'Todos':
+        df_filtrado = df_filtrado[df_filtrado['cliente'] == cliente_selected]
+
+    with st.expander('Clique aqui para ver a tabela'):
+        st.dataframe(df_filtrado)
 
