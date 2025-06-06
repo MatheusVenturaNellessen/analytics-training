@@ -59,6 +59,12 @@ st.markdown("""
         font-weight: 700;
         text-align: center;
     }
+    .mdescription-bad {
+        color: #7C3AED;
+        font-size: 20px;
+        font-weight: 600;
+        text-align: left;
+    }
     .md-bad {
         color: red;
         font-weight: 700;
@@ -75,8 +81,7 @@ st.markdown("""
     }
 
     .diminuir-font {
-        font-size: 19px;
-        margin: 12px;
+        font-size: 31px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -198,9 +203,10 @@ if pagina == "Home":
     with col7:
         st.markdown(f"""
         <div class="mc-bad">
-            <div class="ml-bad">Comparação de vendas: mês {mes_atual} vs. {mes_menos1}</div>
+            <div class="ml-bad">Comparação de vendas</div>
             <div class="mv-bad">R$ {diferenca_vendas_entre_mes_atual_e_menos1:,.2f}</div>
             <div class="md-bad">{diferenca_porcem_entre_mes_atual_e_menos1:.2f}%</div>
+            <div class="mdescription-bad">Entre os meses {mes_atual} vs. {mes_menos1}</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -282,16 +288,47 @@ elif pagina == "Filtragens":
     nomes = top3_clientes.index.tolist()
     valores = top3_clientes.values.tolist()
 
-    mensagem = ' | '.join([f'{nome}: R$ {valor:,.2f}'.replace(',', 'X').replace('.', ',').replace('X', '.') for nome, valor in zip(nomes, valores)])
-
-    st.markdown(f'''
+    col11, col22, col33 = st.columns(3)
+    with col11:
+        st.markdown(f'''
         <div class="mc-default">
-            <div class="ml-default">Top 3 clientes</div>
-            <div class="mv-default diminuir-font">{mensagem}</div>
+            <div class="ml-default">{nomes[0]}</div>
+            <div class="mv-default diminuir-font">R$ {valores[0]:,.2f}</div>
         </div>
-    ''',
-    unsafe_allow_html=True
-    )
+        ''',
+        unsafe_allow_html=True
+        )
+
+    with col22:
+        st.markdown(f'''
+        <div class="mc-default">
+            <div class="ml-default">{nomes[1]}</div>
+            <div class="mv-default diminuir-font">R$ {valores[1]:,.2f}</div>
+        </div>
+        ''',
+        unsafe_allow_html=True
+        )
+
+    with col33:
+        st.markdown(f'''
+        <div class="mc-default">
+            <div class="ml-default">{nomes[2]}</div>
+            <div class="mv-default diminuir-font">R$ {valores[2]:,.2f}</div>
+        </div>
+        ''',
+        unsafe_allow_html=True
+        )
+
+    # mensagem = ' | '.join([f'{nome}: R$ {valor:,.2f}'.replace(',', 'X').replace('.', ',').replace('X', '.') for nome, valor in zip(nomes, valores)])
+
+    # st.markdown(f'''
+    #     <div class="mc-default">
+    #         <div class="ml-default">Top 3 clientes</div>
+    #         <div class="mv-default diminuir-font">{mensagem}</div>
+    #     </div>
+    # ''',
+    # unsafe_allow_html=True
+    # )
 
 elif pagina == "Análises Gráficas":
     # 1º gráfico
