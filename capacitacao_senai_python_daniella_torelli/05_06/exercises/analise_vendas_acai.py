@@ -44,8 +44,39 @@ if pagina == "Home":
     col5.metric('Produto mais Vendido', produto_mais_vendido)
     col6.metric('Forma de Pagamento mais Usada', forma_pagamento_mais_usada)
 
-    # Exibe evolução do(s) produto(s)
+    # Exibe big-number de diferença entre último mês e - 1
+    df['mes'] = df['data_venda'].dt.month
 
+    meses_ordenados = sorted(df['mes'].unique()) # ordena os meses únicos
+
+    df_meses_ordenados = pd.DataFrame({'mes': meses_ordenados}) # cria um DataFrame dos meses ordenados, com coluna intitulada "mes"
+
+    df_ultimos_meses = df_meses_ordenados.tail(2) # pega os últimos 2 meses
+
+    df_ultimos_meses = df_ultimos_meses.reset_index(drop=True) # fundamental para funcionar o iloc
+
+    # Calcula o valor total de vendas do penúltimo mês (mes_menos1)
+    mes_menos1 = df_ultimos_meses.iloc[0]['mes']
+    df_mes_menos1 = df[df['mes'] == mes_menos1]
+    valor_total_mes_menos1 = df_mes_menos1['valor_total'].sum()
+
+    # Calcula o valor total de vendas do últimos mes (mes_atual)
+    mes_atual = df_ultimos_meses.iloc[1]['mes']
+    df_mes_atual = df[df['mes'] == mes_atual]
+    valor_total_mes_atual = df_mes_atual['valor_total'].sum()
+
+    diferenca_vendas_entre_mes_atual_e_menos1 = valor_total_mes_atual - valor_total_mes_menos1
+
+    diferenca_porcem_entre_mes_atual_e_menos1 = (valor_total_mes_atual - valor_total_mes_menos1) / valor_total_mes_menos1 * 100
+
+    col7, = st.columns(1)
+    col7.metric(
+        label=f'Diferença de Vendas: Mês {mes_atual} (mês atual) vs. {mes_menos1} (últimos mês)',
+        value=f"R$ {diferenca_vendas_entre_mes_atual_e_menos1:,.2f}".replace(",", "@").replace(".", ",").replace("@", "."),
+        delta=f"{diferenca_porcem_entre_mes_atual_e_menos1:.2f}%"
+    )
+
+    # Exibe evolução do(s) produto(s)
     with st.expander('Clique aqui para visualizar a evolução de venda do(s) produto(s).'):
         produtos = sorted(df['produto'].unique().tolist())
         produto_selected = st.selectbox('Selecione o produto:', produtos)
@@ -337,4 +368,3 @@ elif pagina == "Tabelas":
 
     with st.expander('Clique aqui para ver a tabela'):
         st.dataframe(df_filtrado)
-
