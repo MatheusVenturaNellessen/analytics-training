@@ -5,6 +5,82 @@ import streamlit as st
 from datetime import date, datetime, timedelta
 import numpy as np
 
+# Estilos
+st.markdown("""
+<style>
+    .mc-default {
+        background: #fff;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 35px;
+        text-align: center;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        margin-right: 15px;
+    }
+    .ml-default {
+        color: #111827;
+        font-size: 25px;
+        font-weight: 600;
+        font-variant: small-caps;
+        text-align: center;
+    }
+    .mv-default {
+        color: #111827;
+        font-size: 45px;
+        font-weight: 700;
+        text-align: center;
+    }
+    .mdescription-default {
+        color: #7C3AED;
+        font-size: 20px;
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .mc-bad {
+        background: #F59E42;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 35px;
+        text-align: center;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        margin-right: 15px;
+    }
+    .ml-bad {
+        color: #111827;
+        font-size: 25px;
+        font-weight: 600;
+        font-variant: small-caps;
+        text-align: center;
+    }
+    .mv-bad {
+        color: #111827;
+        font-size: 45px;
+        font-weight: 700;
+        text-align: center;
+    }
+    .md-bad {
+        color: red;
+        font-weight: 700;
+                font-size: 20px;
+    }
+    .md-bad:before {
+        content: "↓ ";
+    }
+
+    h1 {
+        color: #111827;
+        text-align: center;
+        font-variant: small-caps;
+    }
+
+    .diminuir-font {
+        font-size: 19px;
+        margin: 12px;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 df = pd.read_csv('capacitacao_senai_python_daniella_torelli/05_06/exercises/database/csv_vendas_acai.csv', sep=',', parse_dates=['data_venda'])
 
 # print(df.info()) # os dados estão sem ruído
@@ -24,7 +100,11 @@ pagina = st.sidebar.selectbox(
 
 # Exibição condicional conforme página selecionada
 if pagina == "Home":
-    st.title("Análise Geral")
+    st.markdown("""
+    <h1 class="h1-home">Análise Geral</h1>
+    """,
+    unsafe_allow_html=True
+    )
 
     valor_total_sum = df['valor_total'].sum()  # Soma todos os valores da coluna valor_total
     qtd_vendas = df.shape[0]  # Retorna a quantidade de linhas ~= quantidade de vendas
@@ -34,15 +114,60 @@ if pagina == "Home":
     forma_pagamento_mais_usada = df['forma_pagamento'].value_counts().idxmax()  # Forma de pagamento mais usada
 
     # Exibe os indicadores em colunas
-    col1, col2, col3 = st.columns(3)
-    col4, col5, col6 = st.columns(3)
-    col1.metric('Faturamento Total', f'R$ {valor_total_sum:,.2f}'.replace(",", "@").replace(".", ",").replace("@", "."))
-    col2.metric('Quantidade de Vendas', qtd_vendas)
-    col3.metric('Ticket Médio', f'R$ {valor_medio:,.2f}'.replace(",", "@").replace(".", ",").replace("@", "."))
-    col3.caption('Valor médio de venda')
-    col4.metric('Quantidade Total de Clientes (únicos)', qtd_clientes_unique)
-    col5.metric('Produto mais Vendido', produto_mais_vendido)
-    col6.metric('Forma de Pagamento mais Usada', forma_pagamento_mais_usada)
+    col1, col2, = st.columns(2)
+    col3, col4, = st.columns(2)
+    col5, col6 = st.columns(2)
+
+    with col1:
+        st.markdown(f"""
+        <div class="mc-default">
+            <div class="ml-default">Faturamento total</div>
+            <div class="mv-default">R$ {valor_total_sum:,.2f}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown(f"""
+        <div class="mc-default">
+            <div class="ml-default">Vendas (em quantidade)</div>
+            <div class="mv-default">{qtd_vendas}</div>
+        </div>
+        <style>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown(f"""
+        <div class="mc-default">
+            <div class="ml-default">Ticket médio</div>
+            <div class="mv-default">R$ {valor_medio:,.2f}</div>
+            <div class="mdescription-default">Valor médio do valor de venda</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col4:
+        st.markdown(f"""
+        <div class="mc-default">
+            <div class="ml-default">Clientes únicos</div>
+            <div class="mv-default">{qtd_clientes_unique}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col5:
+        st.markdown(f"""
+        <div class="mc-default">
+            <div class="ml-default">Melhor produto</div>
+            <div class="mv-default">{produto_mais_vendido}</div>
+            <div class="mdescription-default">Item mais vendido</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col6:
+        st.markdown(f"""
+        <div class="mc-default">
+            <div class="ml-default">Método mais usado</div>
+            <div class="mv-default">{forma_pagamento_mais_usada}</div>
+        </div>
+        """, unsafe_allow_html=True)
 
     # Exibe big-number de diferença entre último mês e - 1
     df['mes'] = df['data_venda'].dt.month
@@ -70,11 +195,14 @@ if pagina == "Home":
     diferenca_porcem_entre_mes_atual_e_menos1 = (valor_total_mes_atual - valor_total_mes_menos1) / valor_total_mes_menos1 * 100
 
     col7, = st.columns(1)
-    col7.metric(
-        label=f'Diferença de Vendas: Mês {mes_atual} (mês atual) vs. {mes_menos1} (últimos mês)',
-        value=f"R$ {diferenca_vendas_entre_mes_atual_e_menos1:,.2f}".replace(",", "@").replace(".", ",").replace("@", "."),
-        delta=f"{diferenca_porcem_entre_mes_atual_e_menos1:.2f}%"
-    )
+    with col7:
+        st.markdown(f"""
+        <div class="mc-bad">
+            <div class="ml-bad">Comparação de vendas: mês {mes_atual} vs. {mes_menos1}</div>
+            <div class="mv-bad">R$ {diferenca_vendas_entre_mes_atual_e_menos1:,.2f}</div>
+            <div class="md-bad">{diferenca_porcem_entre_mes_atual_e_menos1:.2f}%</div>
+        </div>
+        """, unsafe_allow_html=True)
 
     # Exibe evolução do(s) produto(s)
     with st.expander('Clique aqui para visualizar a evolução de venda do(s) produto(s).'):
@@ -96,19 +224,34 @@ if pagina == "Home":
 
 elif pagina == "Filtragens":
     # 1º filtro: somatório de "valor_total" por "categoria"
-    st.header('Somatória: Valor Total por Categoria')
+    st.markdown('''
+    <h1>Valor total por categoria</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     categorias = sorted(df['categoria'].unique())
 
-    categorias_opt = st.selectbox('Selecione a Categoria:', categorias)
+    categorias_opt = st.selectbox('Selecione a categoria:', categorias)
 
     df_categoria = df[df['categoria'] == categorias_opt]
     soma_valor_total_por_categoria = df_categoria['valor_total'].sum()
 
-    st.write(f"A soma do valor total para a categoria **{categorias_opt}** é: R$ {soma_valor_total_por_categoria:,.2f}".replace(",", "@").replace(".", ",").replace("@", "."))
+    st.markdown(f'''
+        <div class="mc-default">
+            <div class="ml-default">Soma de categoria {categorias_opt}</div>
+            <div class="mv-default">R$ {soma_valor_total_por_categoria:,.2f}</div>
+        </div>
+    ''',
+    unsafe_allow_html=True
+    )
 
     # 2º filtro: média do "valor_total" agrupada por "forma_pagamento"
-    st.header('Valor de Venda Médio por Método de Pagamento')
+    st.markdown('''
+        <h1>Venda média por método de pagamento</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     formas_pagamento = sorted(df['forma_pagamento'].unique())
 
@@ -116,10 +259,21 @@ elif pagina == "Filtragens":
 
     media_valor_total = df[df['forma_pagamento'] == forma_pagamento_opt]['valor_total'].mean()
 
-    st.markdown(f'O valor médio de venda feito com **{forma_pagamento_opt}** foi: **R$ {media_valor_total:,.2f}**'.replace(",", "@").replace(".", ",").replace("@", "."))
+    st.markdown(f'''
+        <div class="mc-default">
+            <div class="ml-default">Valor médio com {forma_pagamento_opt}</div>
+            <div class="mv-default">R$ {media_valor_total:,.2f}</div>
+        </div>
+    ''',
+    unsafe_allow_html=True
+    )
 
     # 3º filtro: top 3 clientes
-    st.header('Os 3 Maiores Clientes')
+    st.markdown('''
+        <h1>Maiores clientes</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     valor_total_por_cliente = df.groupby('cliente')['valor_total'].sum().sort_values(ascending=False)
 
@@ -130,11 +284,22 @@ elif pagina == "Filtragens":
 
     mensagem = ' | '.join([f'{nome}: R$ {valor:,.2f}'.replace(',', 'X').replace('.', ',').replace('X', '.') for nome, valor in zip(nomes, valores)])
 
-    st.text(f'Os top 3 clientes são: {mensagem}')
+    st.markdown(f'''
+        <div class="mc-default">
+            <div class="ml-default">Top 3 clientes</div>
+            <div class="mv-default diminuir-font">{mensagem}</div>
+        </div>
+    ''',
+    unsafe_allow_html=True
+    )
 
 elif pagina == "Análises Gráficas":
     # 1º gráfico
-    st.header('Produtos mais Vendidos')
+    st.markdown('''
+        <h1>Produtos mais vendidos</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     top5_produtos = df['produto'].value_counts().head(5)
 
@@ -145,14 +310,29 @@ elif pagina == "Análises Gráficas":
     st.pyplot(fig1)
 
     # 2º gráfico
-    st.header('Vendas por Categorias')
+    st.markdown('''
+        <h1>Vendas por categorias</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     categorias = sorted(df['categoria'].unique())
+    default_categorias = categorias.copy()
 
-    categorias_multiselect = st.multiselect('Selecione a(s) categoria(s) para exibir no gráfico:', categorias, default=categorias)
+    if 'categorias_multiselect' not in st.session_state:
+        st.session_state['categorias_multiselect'] = default_categorias
+
+    if st.button('Resetar filtros'):
+        st.session_state['categorias_multiselect'] = default_categorias
+
+    categorias_multiselect = st.multiselect(
+        'Selecione a(s) categoria(s) para exibir no gráfico:',
+        categorias,
+        default=st.session_state['categorias_multiselect'],
+        key='categorias_multiselect'
+    )
 
     df_filtro_vendas_por_categoria = df[df['categoria'].isin(categorias_multiselect)]
-
     vendas_por_categoria_sum = df_filtro_vendas_por_categoria.groupby('categoria')['valor_total'].sum().sort_values()
 
     fig2, ax2 = plt.subplots()
@@ -162,12 +342,27 @@ elif pagina == "Análises Gráficas":
     st.pyplot(fig2)
 
     # 3º gráfico
-    st.header('Vendas por Produtos')
-
+    st.markdown('''
+        <h1>Vendas por produtos</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     produtos = sorted(df['produto'].unique())
+    default_produtos = produtos.copy()
 
-    produtos_multiselect = st.multiselect('Selecione o(s) produto(s) para exibir no gráfico:', produtos, default=produtos)
+    if 'produtos_multiselect' not in st.session_state:
+        st.session_state['produtos_multiselect'] = default_produtos
+
+    if st.button('Resetar filtos'):
+        st.session_state['produtos_multiselect'] = default_produtos
+
+    produtos_multiselect = st.multiselect(
+        'Selecione o(s) produto(s) para exibir no gráfico:',
+        produtos,
+        default=st.session_state['produtos_multiselect'],
+        key='produtos_multiselect'
+        )
 
     df_filtro_vendas_por_produto = df[df['produto'].isin(produtos_multiselect)]
 
@@ -180,7 +375,11 @@ elif pagina == "Análises Gráficas":
     st.pyplot(fig3)
 
     # 4º gráfico
-    st.header('Vendas por Horário')
+    st.markdown('''
+        <h1>Vendas por horário</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     df['hora'] = df['data_venda'].dt.hour
 
@@ -193,7 +392,11 @@ elif pagina == "Análises Gráficas":
     st.pyplot(fig4)
 
     # 5º gráfico
-    st.header('Vendas por Dias da Semana')
+    st.markdown('''
+        <h1>Vendas por dias da semana</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     df['dia_semana'] = df['data_venda'].dt.day_name()
 
@@ -223,17 +426,24 @@ elif pagina == "Análises Gráficas":
     st.pyplot(fig5)
 
     # 6º gráfico
-    st.header('Distribuição: Formas de Pagamento')
+    st.markdown('''
+        <h1>Distribuição: métodos de pagamento</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     qtd_formas_pagamento = df['forma_pagamento'].value_counts()
 
     fig6, ax6 = plt.subplots()
     ax6.pie(qtd_formas_pagamento, labels=qtd_formas_pagamento.index, autopct='%1.2f%%', startangle=90)
-    ax6.set_title('Distribuição das Formas de Pagamento (%)')
     st.pyplot(fig6)
 
     # 7º gráfico
-    st.header('Somatório: Vendas por Formas de Pagamento')
+    st.markdown('''
+        <h1>Somatória: vendas por métodos de pagamento</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     def func_abs(values):
         def my_autopct(pct):
@@ -251,11 +461,14 @@ elif pagina == "Análises Gráficas":
         autopct=func_abs(group_formas_pagamento_by_valor_total.values),
         startangle=90
     )
-    ax8.set_title('Somatório de Vendas por Formas de Pagamento')
     st.pyplot(fig8)
 
     # 8º gráfico
-    st.header('Comparação de Vendas por Mês')
+    st.markdown('''
+        <h1>Comparação: vendas por mês</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     df['mes'] = df['data_venda'].dt.month
 
@@ -269,7 +482,11 @@ elif pagina == "Análises Gráficas":
 
 elif pagina == "Tabelas":
     # 1ª tabela: filtra por período
-    st.header('Filtro por Períodos')
+    st.markdown('''
+        <h1>Filtragem por períodos</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     data_min = df['data_venda'].min()
     data_max = df['data_venda'].max()
@@ -291,7 +508,11 @@ elif pagina == "Tabelas":
         st.dataframe(df_filtro_data_venda)
 
     # 2ª tabela: filtra por forma(s) de pagamento
-    st.header('Filtro por Formas de Pagamentos')
+    st.markdown('''
+        <h1>Filtragem por métodos de pagamento</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     forma_pagamento_opt = st.selectbox(
         'Selecione a forma de pagamento:',
@@ -304,7 +525,11 @@ elif pagina == "Tabelas":
         st.dataframe(df_filtro_forma_pagamento)
 
     # 3ª tabela: filtra por cliente
-    st.header('Filtro por Clientes')
+    st.markdown('''
+        <h1>Filtragem por clientes</h1>
+    ''',
+    unsafe_allow_html=True
+    )
 
     clientes = sorted(df['cliente'].unique())
 
@@ -319,41 +544,76 @@ elif pagina == "Tabelas":
         st.dataframe(df_filtro_cliente)
 
     # 4ª tabela: filtros interativos
-    st.header('Filtros por Formas de Pagamento, Categorias, Cliente e Mês')
+    st.markdown('''
+        <h1>Filtragens por <span class="hover-me">👆</span></h1>
+        <style>
+                .hover-me:hover::after {
+                    content: " categorias, mês, métodos de pagamento e cliente";
+                }
+        </style>
+    ''',
+    unsafe_allow_html=True
+    )
 
     df['mes'] = df['data_venda'].dt.month
 
-    # Filtro por categoria
     categorias_list = sorted(df['categoria'].unique().tolist())
+    mes_list = sorted(df['mes'].unique().tolist())
+    formas_pagamento_list = sorted(df['forma_pagamento'].unique().tolist())
+    clientes_list = ['Todos'] + sorted(df['cliente'].unique().tolist())
+
+    # 2. Inicializa session_state de cada filtro se não existir
+    if 'categorias_selected' not in st.session_state:
+        st.session_state['categorias_selected'] = categorias_list
+
+    if 'mes_selected' not in st.session_state:
+        st.session_state['mes_selected'] = mes_list
+
+    if 'formas_pagamento_selected' not in st.session_state:
+        st.session_state['formas_pagamento_selected'] = formas_pagamento_list
+
+    if 'cliente_selected' not in st.session_state:
+        st.session_state['cliente_selected'] = 'Todos'
+
+    # 3. Botão de reset antes dos widgets
+    if st.button('Resetar filtros'):
+        st.session_state['categorias_selected'] = categorias_list
+        st.session_state['mes_selected'] = mes_list
+        st.session_state['formas_pagamento_selected'] = formas_pagamento_list
+        st.session_state['cliente_selected'] = 'Todos'
+        st.rerun()
+
+    # 4. Widgets usando o session_state (com key)
     categorias_selected = st.multiselect(
         "Selecione a(s) categoria(s):",
         options=categorias_list,
-        default=categorias_list
+        default=st.session_state['categorias_selected'],
+        key='categorias_selected'
     )
 
-    # Filtro por mês
-    mes_list = sorted(df['mes'].unique().tolist())
     mes_selected = st.multiselect(
         'Selecione o mês:',
         options=mes_list,
-        default=mes_list
+        default=st.session_state['mes_selected'],
+        key='mes_selected'
     )
 
-    # Filtro por forma de pagamento
-    formas_pagamento_list = sorted(df['forma_pagamento'].unique().tolist())
     formas_pagamento_selected = st.multiselect(
         "Selecione a(s) forma(s) de pagamento:",
         options=formas_pagamento_list,
-        default=formas_pagamento_list
+        default=st.session_state['formas_pagamento_selected'],
+        key='formas_pagamento_selected'
     )
 
-    # Filtro por cliente
-    clientes_list = ['Todos'] + sorted(df['cliente'].unique().tolist())
-    cliente_selected = st.selectbox("Selecione o cliente:", clientes_list)
+    cliente_selected = st.selectbox(
+        "Selecione o cliente:",
+        clientes_list,
+        index=clientes_list.index(st.session_state['cliente_selected']),
+        key='cliente_selected'
+    )
 
-    # Filtra o DataFrame conforme seleção
+    # 5. Filtra o DataFrame conforme seleção
     df_filtrado = df.copy()
-
     if categorias_selected and len(categorias_selected) < len(categorias_list):
         df_filtrado = df_filtrado[df_filtrado['categoria'].isin(categorias_selected)]
 
