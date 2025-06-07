@@ -86,13 +86,13 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-df = pd.read_csv('capacitacao_senai_python_daniella_torelli/05_06/exercises/database/csv_vendas_acai.csv', sep=',', parse_dates=['data_venda'])
+df = pd.read_csv('capacitacao_senai_python_daniella_torelli/05_06_and_06_06/exercises/database/csv_vendas_acai.csv', sep=',', parse_dates=['data_venda'])
 
 # print(df.info()) # os dados estão sem ruído
 
 df_bkp = df.copy() # cria backup de DataFrame origem
 
-df.to_csv('capacitacao_senai_python_daniella_torelli/05_06/exercises/database/csv_vendas_acai_limpo.csv', sep=',', index=False)
+df.to_csv('capacitacao_senai_python_daniella_torelli/05_06_and_06_06/exercises/database/csv_vendas_acai_limpo.csv', sep=',', index=False)
 
 # Inicia streamlit
 # Sidebar para navegação
