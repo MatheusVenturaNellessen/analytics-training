@@ -14,9 +14,3 @@
 <h3>Autoria e Licença</h3>
 
 <p>Esse projeto foi desenvolvido por <a href="https://www.linkedin.com/in/dev-matheusvn/">Matheus V. Nellessen</a> e está protegido sob a licença MIT. Para ver mais detalhes, visualize o <a href="./LICENSE">documento</a>.</p>
-
-<div align="center">
-    <br><br>
-    
-![analytics-training's wakatime](https://wakatime.com/badge/github/MatheusVenturaNellessen/git-github-training.svg)
-</div>
