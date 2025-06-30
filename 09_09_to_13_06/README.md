@@ -14,7 +14,7 @@
 
 <h2>Bases de Dados Utilizadas</h2>
 <ul>
-  <li>Uma planilha exclusiva atribuída ao grupo.</li>
+  <li>Uma planilha exclusiva atribuída ao grupo. No caso deste projeto: <a href="https://www.kaggle.com/datasets/nelgiriyewithana/top-spotify-songs-2023/data">Most Streamed Spotify Songs 2023</a></li>
   <li>Dados públicos da <a href="https://www.gov.br/anac/pt-br/assuntos/dados-e-estatisticas/dados-estatisticos/dados-estatisticos" target="_blank">ANAC (Agência Nacional de Aviação Civil)</a>, análise obrigatória para todos os grupos.</li>
 </ul>
 
