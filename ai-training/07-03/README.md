@@ -1,6 +1,6 @@
 # Sobre 
 
-Esse repositório reúne os exercícios práticos desenvolvidos nas aulas `124` à `` do curso **Complete Machine Learning and Data Science: Zero to Mastery**, ministrado por **Andrei Neagoie** e **Daniel Bourke** na plataforma `Udemy`.
+Esse repositório reúne os exercícios práticos desenvolvidos nas aulas `124` à `129` do curso **Complete Machine Learning and Data Science: Zero to Mastery**, ministrado por **Andrei Neagoie** e **Daniel Bourke** na plataforma `Udemy`.
 
 <details>
   <summary>Clique para mais informações</summary>
