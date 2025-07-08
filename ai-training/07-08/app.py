@@ -1,9 +1,9 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_icon="🦙", page_title="Pergunte à llama", layout="wide")
+st.set_page_config(page_icon="🦙", page_title="Pergunte a llama", layout="wide")
 
-st.title("Tem alguma dúvida? Pergunte à llama!")
+st.title("Tem alguma dúvida? Pergunte a llama!")
 
 # Modelos disponíveis
 modelos_disponiveis = ["llama3:8b"]
