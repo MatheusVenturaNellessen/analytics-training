@@ -25,6 +25,8 @@
 └── app.py    # script principal da aplicação (interface via Streamlit + consumo da API (llama3))
 </pre>
 
+<p>Alguns arquivos e pastas foram omitidos por não serem essenciais ao entendimento da estrutura do projeto</p>
+
 <hr>
 
 <h2>Funcionalidades</h2>
@@ -90,7 +92,7 @@
     Baixe os arquivos do projeto:
     <br>Acesse diretamente o diretório do projeto no GitHub:
     <pre><code>https://github.com/MatheusVenturaNellessen/data-science-training/tree/main/ai-training/07-08</code></pre>
-    Clique em <b>“Code” → “Download ZIP”</b>, extraia o conteúdo e acesse a pasta <code>07-08</code> no terminal:
+    Clique em <code>Code</code> → <code>Download ZIP</code>, extraia o conteúdo e acesse a pasta <code>07-08/</code> no terminal:
     <pre><code>cd caminho/para/pasta/07-08</code></pre>
   </li>
   <li>
@@ -105,8 +107,7 @@
   <li>
     Execute a aplicação <b>Streamlit</b>:
     <pre><code>streamlit run app.py</code></pre>
-    O navegador será aberto automaticamente. Caso não, acesse manualmente:
-    <pre><code>http://localhost:8501</code></pre>
+    O navegador será aberto automaticamente. Caso não, acesse manualmente: <b>http://localhost:8501</b>
   </li>
 </ol>
 
